@@ -1,4 +1,4 @@
-import 'package:exemplo_flutter/pages/home_page.dart';
+import 'package:exemplo_flutter/pages/home_page_flutter.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.green),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

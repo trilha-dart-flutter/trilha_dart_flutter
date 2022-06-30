@@ -1,7 +1,16 @@
+import 'package:exemplo_flutter/pages/page_views/one_page.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PageController _pageController = PageController();
+  int indexBottomNavigationBar = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -11,48 +20,37 @@ class HomePage extends StatelessWidget {
           child: Text('AppBar'),
         ),
       ),
-      body: Column(
+      body: PageView(
+        controller: _pageController,
         children: [
-          Container(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: const Center(
-              child: Text(
-                "Olá Mundo!",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              Container(
-                  color: Colors.red,
-                  height: 100,
-                  width: 195,
-                  child: const Center(child: Text('Container 01'))),
-              Container(
-                  color: Colors.green,
-                  height: 100,
-                  width: 195,
-                  child: const Center(child: Text('Container 01'))),
-            ],
-          ),
+          const OnePage(),
+          Container(color: Colors.red),
+          Container(color: Colors.yellow),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.local_laundry_service_sharp), label: 'Item 01'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.local_laundry_service_sharp), label: 'Item 02'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.local_laundry_service_sharp), label: 'Item 03'),
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: indexBottomNavigationBar,
+          onTap: (int page) {
+            setState(() {
+              indexBottomNavigationBar = page;
+            });
+            _pageController.animateToPage(
+              page,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
+            );
+          },
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_laundry_service_sharp),
+                label: 'Item 01'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_laundry_service_sharp),
+                label: 'Item 02'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_laundry_service_sharp),
+                label: 'Item 03'),
+          ]),
     );
   }
 }
